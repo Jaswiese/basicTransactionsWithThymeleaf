@@ -1,5 +1,6 @@
 package dev.jasperwiese.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.math.BigDecimal;
@@ -7,28 +8,39 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class Transaction {
-    private UUID id;
+    private String id;
     private BigDecimal amount;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mmZ")
     private ZonedDateTime timestamp;
     private String reference;
     private String bankSlogan;
+    private String inputUser;
 
     public Transaction() {
     }
 
-    public Transaction(UUID id, BigDecimal amount, ZonedDateTime timestamp, String reference, String bankSlogan) {
-        this.id = id;
+    public Transaction(BigDecimal amount, ZonedDateTime timestamp, String reference, String bankSlogan) {
+        this.id = UUID.randomUUID().toString();
         this.amount = amount;
         this.timestamp = timestamp;
         this.reference = reference;
         this.bankSlogan = bankSlogan;
     }
 
-    public UUID getId() {
+    public Transaction( BigDecimal amount, ZonedDateTime timestamp, String reference, String bankSlogan, String inputUser) {
+        this.id = UUID.randomUUID().toString();
+        this.amount = amount;
+        this.timestamp = timestamp;
+        this.reference = reference;
+        this.bankSlogan = bankSlogan;
+        this.inputUser = inputUser;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
