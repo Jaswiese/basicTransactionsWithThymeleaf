@@ -25,11 +25,24 @@ public class TransactionService {
         return transactions;
     }
 
+    public List<Transaction> findByIncomingId(String userId) {
+        return transactions
+                .stream()
+                .filter(c -> c.getId().equals(userId))
+                .toList();
+    }
+
     public Transaction create(BigDecimal amount, String reference){
-        UUID userId = UUID.randomUUID();
         ZonedDateTime timeStamp = ZonedDateTime.now();
-        Transaction transaction = new Transaction(userId,amount,timeStamp,reference, bankSlogan);
+        Transaction transaction = new Transaction(amount,timeStamp,reference, bankSlogan);
         System.out.println("serivce call: " + transaction);
+        transactions.add(transaction);
+        return transaction;
+    }
+
+    public Transaction createFromInput(BigDecimal amount, String reference, String inputUser) {
+        ZonedDateTime timeStamp = ZonedDateTime.now();
+        Transaction transaction = new Transaction(amount, timeStamp, reference, bankSlogan, inputUser);
         transactions.add(transaction);
         return transaction;
     }
